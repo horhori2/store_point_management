@@ -6,14 +6,16 @@ const initSqlJs = require('sql.js');
 const path = require('path');
 const fs = require('fs');
 
+require('dotenv').config();
+
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const DB_PATH = path.join(__dirname, 'data.sqlite');
 
 app.use(cors({ credentials: true }));
 app.use(express.json());
 app.use(session({
-  secret: 'point-system-secret-key-2024',
+  secret: process.env.SESSION_SECRET || 'fallback-secret-dev-only',
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 1000 * 60 * 60 * 8 } // 8시간
